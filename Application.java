@@ -39,25 +39,34 @@ public class Application extends JFrame{
     private static final int CARD_HEIGHT = 395;
     private static final int SPACING = 14;
 
-    // Custom Players
+    public static ArrayList<Player> leftWings = new ArrayList<Player>();
+    public static ArrayList<Player> strikers = new ArrayList<Player>();
+    public static ArrayList<Player> rightWings = new ArrayList<Player>();
+    public static ArrayList<Player> centerMids = new ArrayList<Player>();
+    public static ArrayList<Player> leftBacks = new ArrayList<Player>();
+    public static ArrayList<Player> centerBacks = new ArrayList<Player>();
+    public static ArrayList<Player> rightBacks = new ArrayList<Player>();
+    public static ArrayList<Player> goalKeepers = new ArrayList<Player>();
 
-    Player sokullu = new Player(98, 1,"Canada", "Icons", "Icons", "\\images\\SOKULLU.png");
-    Player lil_deeney = new Goalkeeper(90, 1, "Canada","Icons ", "Icons", "\\images\\LIL_DEENEY.png");
-    Player lil_drew = new Player(92, 1, "Canada", "Liverpool", "Premier League", "\\images\\DREW.png");
-    Player lil_gingy = new Player(89, 1, "Canada", "Manchester City", "Premier League", "\\images\\LIL_GINGY.png");
-    Player nibs = new Player(91, 1, "Canada", "Manchester City", "Premier League", "\\images\\NIBS.png");
-    Player remo = new Player(86, 1, "Canada", "Southampton", "Premier League", "\\images\\REMO.png");
-    Player dj_donnie_d = new Player(70, 2, "Canada", "Everton", "Premier League", "\\images\\DJ_DONNIE_D.png");
-    Player martin = new Player(45, 1, "Israel", "Swansea City", "Premier League", "\\images\\MARTIN.png");
-    Player ray = new Player(88, 1, "Canada", "Manchester United", "Premier League", "\\images\\RAY.png");
+    private static Player sokullu = new Player(98, "Canada", "Icons", "Icons", "\\images\\SOKULLU.png");
+    private static Player lil_deeney = new Player(90, "Canada","Icons ", "Icons", "\\images\\LIL_DEENEY.png");
+    private static Player drew = new Player(92, "Canada", "Liverpool", "Premier League", "\\images\\DREW.png");
+    private static Player lil_gingy = new Player(89, "Canada", "Manchester City", "Premier League", "\\images\\LIL_GINGY.png");
+    private static Player nibs = new Player(91, "Canada", "Manchester City", "Premier League", "\\images\\NIBS.png");
+    private static Player remo = new Player(86, "Canada", "Southampton", "Premier League", "\\images\\REMO.png");
+    private static Player lil_jaypee = new Player(84, "Canada", "Everton", "Premier League", "\\images\\LIL_JAYPEE.png");
+    private static Player dj_donnie_d = new Player(70, "Canada", "Everton", "Premier League", "\\images\\DJ_DONNIE_D.png");
+    private static Player martin = new Player(45, "Israel", "Swansea City", "Premier League", "\\images\\MARTIN.png");
+    private static Player ray = new Player(88, "Canada", "Manchester United", "Premier League", "\\images\\RAY.png");
+    private static Player oreils = new Player(99, "Canada", "Icons", "Icons", "\\images\\OREILS.png");
 
     // Real Players
 
-    Player ronaldo = new Player(94, 2, "Portugal","Real Madrid", "LaLiga", "\\images\\RONALDO.png");
+    static Player ronaldo = new Player(94, "Portugal","Real Madrid", "LaLiga", "\\images\\RONALDO.png");
 
     public Application() {
         // Creating new window
-        add(new Window());
+        add(new Window(1));
         // Setting window size, title, close button behaviour, and centering it
         setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         setTitle("FutDraft");
@@ -66,6 +75,7 @@ public class Application extends JFrame{
     }
 
     public static void main(String[] args) {
+        fillArrLists();
         // Prevents window from becoming unresponsive due to background calculations
         EventQueue.invokeLater(() -> {
             Application fut = new Application();
@@ -73,11 +83,28 @@ public class Application extends JFrame{
         });
     }
 
+    private static void fillArrLists() {
+        leftWings.add(sokullu);
+        strikers.add(oreils);
+        strikers.add(remo);
+        rightWings.add(lil_gingy);
+
+        centerMids.add(drew);
+        centerMids.add(martin);
+
+        leftBacks.add(lil_jaypee);
+        centerBacks.add(nibs);
+        rightBacks.add(ray);
+
+        goalKeepers.add(lil_deeney);
+        goalKeepers.add(dj_donnie_d);
+    }
+
     // Method for retrieving image when given image path
 
     public static BufferedImage imageFromFile(String path) {
         try {
-            URL resource = FutDraft.class.getClassLoader().getResource(path);
+            URL resource = Application.class.getClassLoader().getResource(path);
             if (resource == null)
                 throw new NullPointerException();
             return ImageIO.read(resource);
