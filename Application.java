@@ -18,9 +18,7 @@
  */
 
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.net.URL;
@@ -29,24 +27,18 @@ import java.util.*;
 
 public class Application extends JFrame{
 
-    // Variables
+    // ArrayLists which contain Players and group them by position
 
-    private static final int SCREEN_WIDTH = 1440;
-    private static final int SCREEN_HEIGHT = 810;
-    private static final int CARDCHOOSE_WIDTH = 1440;
-    private static final int CARDCHOOSE_HEIGHT = 300;
-    private static final int CARD_WIDTH = 260;
-    private static final int CARD_HEIGHT = 395;
-    private static final int SPACING = 14;
+    private static ArrayList<Player> leftWings = new ArrayList<Player>();
+    private static ArrayList<Player> strikers = new ArrayList<Player>();
+    private static ArrayList<Player> rightWings = new ArrayList<Player>();
+    private static ArrayList<Player> centerMids = new ArrayList<Player>();
+    private static ArrayList<Player> leftBacks = new ArrayList<Player>();
+    private static ArrayList<Player> centerBacks = new ArrayList<Player>();
+    private static ArrayList<Player> rightBacks = new ArrayList<Player>();
+    private static ArrayList<Player> goalKeepers = new ArrayList<Player>();
 
-    public static ArrayList<Player> leftWings = new ArrayList<Player>();
-    public static ArrayList<Player> strikers = new ArrayList<Player>();
-    public static ArrayList<Player> rightWings = new ArrayList<Player>();
-    public static ArrayList<Player> centerMids = new ArrayList<Player>();
-    public static ArrayList<Player> leftBacks = new ArrayList<Player>();
-    public static ArrayList<Player> centerBacks = new ArrayList<Player>();
-    public static ArrayList<Player> rightBacks = new ArrayList<Player>();
-    public static ArrayList<Player> goalKeepers = new ArrayList<Player>();
+    // Creating Player variables to be placed into lists
 
     private static Player sokullu = new Player(98, "Canada", "Icons", "Icons", "\\images\\SOKULLU.png");
     private static Player lil_deeney = new Player(90, "Canada","Icons ", "Icons", "\\images\\LIL_DEENEY.png");
@@ -60,15 +52,13 @@ public class Application extends JFrame{
     private static Player ray = new Player(88, "Canada", "Manchester United", "Premier League", "\\images\\RAY.png");
     private static Player oreils = new Player(99, "Canada", "Icons", "Icons", "\\images\\OREILS.png");
 
-    // Real Players
-
-    static Player ronaldo = new Player(94, "Portugal","Real Madrid", "LaLiga", "\\images\\RONALDO.png");
+    private static Player ronaldo = new Player(94, "Portugal","Real Madrid", "LaLiga", "\\images\\RONALDO.png");
 
     public Application() {
         // Creating new window
-        add(new Window(1));
+        add(new Start());
         // Setting window size, title, close button behaviour, and centering it
-        setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+        setSize(1440, 1080);
         setTitle("FutDraft");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -99,6 +89,28 @@ public class Application extends JFrame{
         goalKeepers.add(lil_deeney);
         goalKeepers.add(dj_donnie_d);
     }
+
+    // Methods for retrieving a player from an arraylist when given their position
+
+    public Player getLeftWing(int pos) { return leftWings.remove(pos); }
+    public Player getStriker(int pos) { return strikers.remove(pos); }
+    public Player getRightWing(int pos) { return rightWings.remove(pos); }
+    public Player getCenterMid(int pos) { return centerMids.remove(pos); }
+    public Player getLeftBack(int pos) { return leftBacks.remove(pos); }
+    public Player getCenterBack(int pos) { return centerBacks.remove(pos); }
+    public Player getRightBack(int pos) { return rightBacks.remove(pos); }
+    public Player getGoalkeeper(int pos) { return goalKeepers.remove(pos); }
+
+    // Methods for updating number of remaining players in each arraylist
+
+    public static int leftWingsSize() { return leftWings.size(); }
+    public static int strikersSize() { return strikers.size(); }
+    public static int rightWingsSize() { return rightWings.size(); }
+    public static int centerMidsSize() { return centerMids.size(); }
+    public static int leftBacksSize() { return leftBacks.size(); }
+    public static int centerBacksSize() { return centerBacks.size(); }
+    public static int rightBacksSize() { return rightBacks.size(); }
+    public static int goalKeepersSize() { return goalKeepers.size(); }
 
     // Method for retrieving image when given image path
 
