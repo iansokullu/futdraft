@@ -17,7 +17,13 @@ import javax.swing.*;
 
 public class Application extends JFrame{
 
+    // Initialize sound clip
+
     private static Clip clip;
+
+    // Store entered cheatcode
+
+    private static String cheatCode = "None";
 
     // ArrayLists which contain Players and group them by position
 
@@ -30,30 +36,40 @@ public class Application extends JFrame{
     private static ArrayList<Player> rightBacks = new ArrayList<Player>();
     private static ArrayList<Player> goalKeepers = new ArrayList<Player>();
 
+    // HashMap for finding each ArrayList using their position
+
+    private static HashMap<String, ArrayList<Player>> playerLists = new HashMap<>();
+
     // Creating Player variables to be placed into lists
 
-    private static Player sokullu = new Player(98, "Canada", "Icons", "Icons", "\\images\\SOKULLU.png,", "\\images\\SOKULLU_SMALL.png,");
-    private static Player lil_deeney = new Player(90, "Canada","Icons ", "Icons", "\\images\\LIL_DEENEY.png", "\\images\\LIL_DEENEY_SMALL.png");
-    private static Player drew = new Player(92, "Canada", "Liverpool", "Premier League", "\\images\\DREW.png", "\\images\\DREW_SMALL.png");
-    private static Player lil_gingy = new Player(89, "Canada", "Manchester City", "Premier League", "\\images\\LIL_GINGY.png", "\\images\\LIL_GINGY_SMALL.png");
-    private static Player nibs = new Player(91, "Canada", "Manchester City", "Premier League", "\\images\\NIBS.png", "\\images\\NIBS_SMALL.png");
-    private static Player remo = new Player(86, "Canada", "Southampton", "Premier League", "\\images\\REMO.png", "\\images\\REMO_SMALL.png");
-    private static Player lil_jaypee = new Player(84, "Canada", "Everton", "Premier League", "\\images\\LIL_JAYPEE.png", "\\images\\LIL_JAYPEE_SMALL.png");
-    private static Player dj_donnie_d = new Player(70, "Canada", "Everton", "Premier League", "\\images\\DJ_DONNIE_D.png", "\\images\\DJ_DONNIE_D_SMALL.png");
-    private static Player martin = new Player(45, "Israel", "Swansea City", "Premier League", "\\images\\MARTIN.png", "\\images\\MARTIN_SMALL.png");
-    private static Player ray = new Player(88, "Canada", "Manchester United", "Premier League", "\\images\\RAY.png", "\\images\\RAY_SMALL.png");
-    private static Player oreils = new Player(99, "Canada", "Icons", "Icons", "\\images\\OREILS.png", "\\images\\OREILS_SMALL.png");
+    private static Player sokullu = new Player(98, "LW", "Canada", "Icons", "Icons", "\\images\\SOKULLU.png,", "\\images\\SOKULLU_SMALL.png,");
+    private static Player lil_deeney = new Player(90, "GK", "Canada","Icons ", "Icons", "\\images\\LIL_DEENEY.png", "\\images\\LIL_DEENEY_SMALL.png");
+    private static Player drew = new Player(92, "CM", "Canada", "Liverpool", "Premier League", "\\images\\DREW.png", "\\images\\DREW_SMALL.png");
+    private static Player lil_gingy = new Player(89, "RW", "Canada", "Manchester City", "Premier League", "\\images\\LIL_GINGY.png", "\\images\\LIL_GINGY_SMALL.png");
+    private static Player nibs = new Player(91, "Canada", "CB", "Manchester City", "Premier League", "\\images\\NIBS.png", "\\images\\NIBS_SMALL.png");
+    private static Player remo = new Player(86, "Canada", "ST", "Southampton", "Premier League", "\\images\\REMO.png", "\\images\\REMO_SMALL.png");
+    private static Player lil_jaypee = new Player(84, "LB", "Canada", "Everton", "Premier League", "\\images\\LIL_JAYPEE.png", "\\images\\LIL_JAYPEE_SMALL.png");
+    private static Player dj_donnie_d = new Player(70, "GK", "Canada", "Everton", "Premier League", "\\images\\DJ_DONNIE_D.png", "\\images\\DJ_DONNIE_D_SMALL.png");
+    private static Player martin = new Player(45, "CM", "Israel", "Swansea City", "Premier League", "\\images\\MARTIN.png", "\\images\\MARTIN_SMALL.png");
+    private static Player ray = new Player(88, "RB", "Canada", "Manchester United", "Premier League", "\\images\\RAY.png", "\\images\\RAY_SMALL.png");
 
-    private static Player ronaldo = new Player(94, "Portugal","Real Madrid", "LaLiga", "\\images\\RONALDO.png", "\\images\\RONALDO_SMALL.png");
+    private static Player jason_jugoon = new Player(420, "ST", "Trinidad and Tobago", "Real Madrid", "LaLiga", "\\images\\JASON_JUGOON.png", "\\images\\JASON_JUGOON.png");
+    private static Player oreils = new Player(99, "ST", "Canada", "Icons", "Icons", "\\images\\OREILS.png", "\\images\\OREILS_SMALL.png");
+
+    private static Player ronaldo = new Player(94, "LW", "Portugal","Real Madrid", "LaLiga", "\\images\\RONALDO.png", "\\images\\RONALDO_SMALL.png");
+
+    // Initialise the frame to allow it to be accessed by other classes through methods
+
+    private static Application frame;
 
     // The frame which contains all other panels
 
-    public Application() {
+    protected Application() {
 
         // Setting window size, title, close button behaviour, and centering it
 
-        setSize(1440, 1080);
-        setTitle("Main Menu");
+        setSize(1440, 810);
+        setTitle("Start");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -65,19 +81,31 @@ public class Application extends JFrame{
         Start start = new Start();
         Menu menu = new Menu();
 
+
+
         // Adding starting panels
         add(start);
         pack();
 
-        // Adding mouseListener for changing between panels
+        // Adding mouseListener for changing to the next panel
 
         addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                remove(start);
-                add(menu);
-                revalidate();
-                repaint();
-                setTitle("Draft Simulator");
+                int x = e.getX();
+                int y = e.getY();
+                if(cheatCode.equals("None") && x >= 1100 && x <= 1140 && y >= 680 && y <= 705) {
+                    cheatCode = JOptionPane.showInputDialog("Enter code: ", null);
+                    if(cheatCode == null || cheatCode.isEmpty())
+                        cheatCode = "None";
+                    System.out.println("Cheat code entered: " + cheatCode);
+                }
+                else {
+                    remove(start);
+                    add(menu);
+                    revalidate();
+                    repaint();
+                    setTitle("Main Menu");
+                }
             }
         });
     }
@@ -86,11 +114,18 @@ public class Application extends JFrame{
 
     public static void main(String[] args) {
         fillArrLists();
-        Application frame = new Application();
+        frame = new Application();
         frame.setVisible(true);
     }
 
-    // Method used to fill the arrLists
+    public static void startGame() {
+        Application.stopClip();
+        Draft.initUI();
+        frame.setVisible(false);
+        frame.dispose();
+    }
+
+    // Method used to fill the arrLists and map them with the HashMap
 
     private static void fillArrLists() {
         leftWings.add(sokullu);
@@ -107,29 +142,24 @@ public class Application extends JFrame{
 
         goalKeepers.add(lil_deeney);
         goalKeepers.add(dj_donnie_d);
+
+        playerLists.put("LW", leftWings);
+        playerLists.put("ST", strikers);
+        playerLists.put("RW", rightWings);
+        playerLists.put("CM", centerMids);
+        playerLists.put("LB", leftBacks);
+        playerLists.put("CB", centerBacks);
+        playerLists.put("RB", rightBacks);
+        playerLists.put("GK", goalKeepers);
     }
 
-    // Methods for retrieving a player from an arraylist when given their position
+    // Method for retrieving a player from an arraylist
 
-    public Player getLeftWing(int pos) { return leftWings.remove(pos); }
-    public Player getStriker(int pos) { return strikers.remove(pos); }
-    public Player getRightWing(int pos) { return rightWings.remove(pos); }
-    public Player getCenterMid(int pos) { return centerMids.remove(pos); }
-    public Player getLeftBack(int pos) { return leftBacks.remove(pos); }
-    public Player getCenterBack(int pos) { return centerBacks.remove(pos); }
-    public Player getRightBack(int pos) { return rightBacks.remove(pos); }
-    public Player getGoalkeeper(int pos) { return goalKeepers.remove(pos); }
+    public static Player getPlayer(String pos, int id) { return playerLists.get(pos).remove(id); }
 
-    // Methods for updating number of remaining players in each arraylist
+    // Method for checking the number of remaining players in an arraylist
 
-    public static int leftWingsSize() { return leftWings.size(); }
-    public static int strikersSize() { return strikers.size(); }
-    public static int rightWingsSize() { return rightWings.size(); }
-    public static int centerMidsSize() { return centerMids.size(); }
-    public static int leftBacksSize() { return leftBacks.size(); }
-    public static int centerBacksSize() { return centerBacks.size(); }
-    public static int rightBacksSize() { return rightBacks.size(); }
-    public static int goalKeepersSize() { return goalKeepers.size(); }
+    public static int listLength(String pos, int id) { return playerLists.get(pos).size(); }
 
     // Method for retrieving image when given image path
 
@@ -145,6 +175,10 @@ public class Application extends JFrame{
         }
         return null;
     }
+
+    // Method for returning entered cheatcode (if any)
+
+    public static String getCheatCode() { return cheatCode; }
 
     // Method for playing sound
 

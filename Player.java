@@ -2,14 +2,16 @@ import java.awt.image.BufferedImage;
 
 public class Player {
     private int rating;
+    private String position;
     private String country;
     private String club;
     private String league;
     private String card;
     private String smallCard;
 
-    public Player(int r, String c, String cl, String l, String ca, String sc) {
+    public Player(int r, String p, String c, String cl, String l, String ca, String sc) {
         rating = r;
+        position = p;
         country = c;
         club = cl;
         league = l;

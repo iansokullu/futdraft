@@ -28,6 +28,9 @@ public class Menu extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 int x = e.getX();
                 int y = e.getY();
+
+                // Check if any buttons were clicked
+
                 if(x >= 160 && x <= 400 && y >= 300 && y <= 527)
                     formation = 1;
                 else if(x >= 600 && x <= 840 && y >= 300 && y <= 527)
@@ -36,11 +39,14 @@ public class Menu extends JPanel {
                     formation = 3;
                 if(x > 470 && x < 970 && y > 600 && y < 717 && formation != 0) {
                     stop = true;
-                    add(new Draft());
+                    Application.startGame();
                 }
                 else
                     repaint();
             }
+
+            // Animation for the start button
+
             public void mousePressed(MouseEvent e) {
                 int x = e.getX();
                 int y = e.getY();
@@ -68,19 +74,19 @@ public class Menu extends JPanel {
             g.drawImage(background, 5, 5, null);
             g.drawImage(continueButton, 470, 600, null);
             if(formation == 1)
-                g.setColor(Color.yellow);
+                g.setColor(Color.darkGray);
             else
-                g.setColor(Color.black);
+                g.setColor(Color.lightGray);
             g.fillRect(140, 210, 280, 267);
             if(formation == 2)
-                g.setColor(Color.yellow);
+                g.setColor(Color.darkGray);
             else
-                g.setColor(Color.black);
+                g.setColor(Color.lightGray);
             g.fillRect(580, 210, 280, 267);
             if(formation == 3)
-                g.setColor(Color.yellow);
+                g.setColor(Color.darkGray);
             else
-                g.setColor(Color.black);
+                g.setColor(Color.lightGray);
             g.fillRect(1020, 210, 280, 267);
             Color c1 = new Color(15,136,189);
             g.setColor(c1);
@@ -98,6 +104,5 @@ public class Menu extends JPanel {
             g.drawString("4-1-2-1-2", 1113, 444);
         }
     }
-
     public static int getFormation() { return formation; }
 }

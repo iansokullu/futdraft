@@ -4,15 +4,10 @@ import java.io.IOException;
 
 public class Select {
     private Player[] players = new Player[5];
+    private Player selectedPlayer;
 
-    public Select(String position) throws InterruptedException {
-        if(position.equals("LW")) {
-            for(int i = 0; i < players.length; i++) {
-                int size = Application.leftWingsSize();
-                players[i] = new Application().getLeftWing((int)(size * Math.random()));
-            }
-        }
-        showOptions();
+    public Select(String position) {
+
     }
     public void showOptions() {
         BufferedImage[] images = new BufferedImage[5];
