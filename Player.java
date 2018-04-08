@@ -6,13 +6,15 @@ public class Player {
     private String club;
     private String league;
     private String card;
+    private String smallCard;
 
-    public Player(int r, String c, String cl, String l, String ca) {
+    public Player(int r, String c, String cl, String l, String ca, String sc) {
         rating = r;
         country = c;
         club = cl;
         league = l;
         card = ca;
+        smallCard = sc;
     }
 
     public Player() {
@@ -28,4 +30,5 @@ public class Player {
     public String getClub() { return club; }
     public String getLeague() { return league; }
     public BufferedImage getCard() { return Application.imageFromFile(card); }
+    public BufferedImage getSmallCard() { return Application.imageFromFile(smallCard); }
 }

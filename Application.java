@@ -3,21 +3,9 @@
  * Richmond Hill, Ontario, Canada
  * 2017-2018
  * ICS4U
- *
- * Window Size: 1440 x 810
- *
- * ------------------INDEX------------------
- * Line = Import Statements
- * Line = Class Header
- * Line = Variables
- * Line = Card Images
- * Line = Custom Players
- * Line = Real Players
- * Line = Paint Method
- * Line = MouseListener
  */
 
-import java.awt.*;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -26,6 +14,14 @@ import javax.swing.*;
 import java.util.*;
 
 public class Application extends JFrame{
+
+    // Int to show which panel is currently being displayed
+
+    private int scr = 0;
+
+    // Int used to store the chosen formation from the Menu class
+
+    private static int formation = -1;
 
     // ArrayLists which contain Players and group them by position
 
@@ -40,38 +36,76 @@ public class Application extends JFrame{
 
     // Creating Player variables to be placed into lists
 
-    private static Player sokullu = new Player(98, "Canada", "Icons", "Icons", "\\images\\SOKULLU.png");
-    private static Player lil_deeney = new Player(90, "Canada","Icons ", "Icons", "\\images\\LIL_DEENEY.png");
-    private static Player drew = new Player(92, "Canada", "Liverpool", "Premier League", "\\images\\DREW.png");
-    private static Player lil_gingy = new Player(89, "Canada", "Manchester City", "Premier League", "\\images\\LIL_GINGY.png");
-    private static Player nibs = new Player(91, "Canada", "Manchester City", "Premier League", "\\images\\NIBS.png");
-    private static Player remo = new Player(86, "Canada", "Southampton", "Premier League", "\\images\\REMO.png");
-    private static Player lil_jaypee = new Player(84, "Canada", "Everton", "Premier League", "\\images\\LIL_JAYPEE.png");
-    private static Player dj_donnie_d = new Player(70, "Canada", "Everton", "Premier League", "\\images\\DJ_DONNIE_D.png");
-    private static Player martin = new Player(45, "Israel", "Swansea City", "Premier League", "\\images\\MARTIN.png");
-    private static Player ray = new Player(88, "Canada", "Manchester United", "Premier League", "\\images\\RAY.png");
-    private static Player oreils = new Player(99, "Canada", "Icons", "Icons", "\\images\\OREILS.png");
+    private static Player sokullu = new Player(98, "Canada", "Icons", "Icons", "\\images\\SOKULLU.png,", "\\images\\SOKULLU_SMALL.png,");
+    private static Player lil_deeney = new Player(90, "Canada","Icons ", "Icons", "\\images\\LIL_DEENEY.png", "\\images\\LIL_DEENEY_SMALL.png");
+    private static Player drew = new Player(92, "Canada", "Liverpool", "Premier League", "\\images\\DREW.png", "\\images\\DREW_SMALL.png");
+    private static Player lil_gingy = new Player(89, "Canada", "Manchester City", "Premier League", "\\images\\LIL_GINGY.png", "\\images\\LIL_GINGY_SMALL.png");
+    private static Player nibs = new Player(91, "Canada", "Manchester City", "Premier League", "\\images\\NIBS.png", "\\images\\NIBS_SMALL.png");
+    private static Player remo = new Player(86, "Canada", "Southampton", "Premier League", "\\images\\REMO.png", "\\images\\REMO_SMALL.png");
+    private static Player lil_jaypee = new Player(84, "Canada", "Everton", "Premier League", "\\images\\LIL_JAYPEE.png", "\\images\\LIL_JAYPEE_SMALL.png");
+    private static Player dj_donnie_d = new Player(70, "Canada", "Everton", "Premier League", "\\images\\DJ_DONNIE_D.png", "\\images\\DJ_DONNIE_D_SMALL.png");
+    private static Player martin = new Player(45, "Israel", "Swansea City", "Premier League", "\\images\\MARTIN.png", "\\images\\MARTIN_SMALL.png");
+    private static Player ray = new Player(88, "Canada", "Manchester United", "Premier League", "\\images\\RAY.png", "\\images\\RAY_SMALL.png");
+    private static Player oreils = new Player(99, "Canada", "Icons", "Icons", "\\images\\OREILS.png", "\\images\\OREILS_SMALL.png");
 
-    private static Player ronaldo = new Player(94, "Portugal","Real Madrid", "LaLiga", "\\images\\RONALDO.png");
+    private static Player ronaldo = new Player(94, "Portugal","Real Madrid", "LaLiga", "\\images\\RONALDO.png", "\\images\\RONALDO_SMALL.png");
+
+    // The frame which contains all other panels
 
     public Application() {
-        // Creating new window
-        add(new Start());
+
         // Setting window size, title, close button behaviour, and centering it
-        setSize(1440, 1080);
-        setTitle("FutDraft");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        setSize(1440, 810);
+        setTitle("Main Menu");
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+
+        // Creating panels
+        Start start = new Start();
+        Menu menu = new Menu();
+        Draft draft = new Draft();
+
+        // Adding starting panels
+        add(start);
+        pack();
+
+        // Adding mouseListener for changing between panels
+
+        addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if(scr == 0) {
+                    remove(start);
+                    add(menu);
+                    revalidate();
+                    repaint();
+                    scr = 1;
+                }
+                else if(scr == 1) {
+                    if(Menu.formationIsSelected()) {
+                        setFormation(Menu.getFormation());
+                        remove(menu);
+                        setSize(1440, 1080);
+                        setTitle("Draft Simulator");
+                        add(draft);
+                        revalidate();
+                        repaint();
+                        scr = 2;
+                    }
+                }
+            }
+        });
     }
+
+    // Main method
 
     public static void main(String[] args) {
         fillArrLists();
-        // Prevents window from becoming unresponsive due to background calculations
-        EventQueue.invokeLater(() -> {
-            Application fut = new Application();
-            fut.setVisible(true);
-        });
+        Application frame = new Application();
+        frame.setVisible(true);
     }
+
+    // Method used to fill the arrLists
 
     private static void fillArrLists() {
         leftWings.add(sokullu);
@@ -111,6 +145,11 @@ public class Application extends JFrame{
     public static int centerBacksSize() { return centerBacks.size(); }
     public static int rightBacksSize() { return rightBacks.size(); }
     public static int goalKeepersSize() { return goalKeepers.size(); }
+
+    // Methods for setting and retrieving formation after being selected
+
+    public static void setFormation(int x) { formation = x; }
+    public static int getFormation() { return formation; }
 
     // Method for retrieving image when given image path
 
