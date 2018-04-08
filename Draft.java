@@ -29,4 +29,5 @@ public class Draft extends JFrame {
         game = new Draft();
         game.setVisible(true);
     }
+    public static int getFormation() { return formation; }
 }

@@ -63,7 +63,7 @@ public class Application extends JFrame{
 
     // The frame which contains all other panels
 
-    protected Application() {
+    private Application() {
 
         // Setting window size, title, close button behaviour, and centering it
 
