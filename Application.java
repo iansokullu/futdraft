@@ -7,21 +7,17 @@
 
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import javax.imageio.ImageIO;
+import java.io.*;
 import java.net.URL;
-import javax.swing.*;
 import java.util.*;
+import javax.imageio.ImageIO;
+import javax.sound.sampled.*;
+import javax.swing.*;
+
 
 public class Application extends JFrame{
 
-    // Int to show which panel is currently being displayed
-
-    private int scr = 0;
-
-    // Int used to store the chosen formation from the Menu class
-
-    private static int formation = -1;
+    private static Clip clip;
 
     // ArrayLists which contain Players and group them by position
 
@@ -56,15 +52,18 @@ public class Application extends JFrame{
 
         // Setting window size, title, close button behaviour, and centering it
 
-        setSize(1440, 810);
+        setSize(1440, 1080);
         setTitle("Main Menu");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        //Playing main menu theme
+
+        playSound("MenuTheme.wav");
+
         // Creating panels
         Start start = new Start();
         Menu menu = new Menu();
-        Draft draft = new Draft();
 
         // Adding starting panels
         add(start);
@@ -74,25 +73,11 @@ public class Application extends JFrame{
 
         addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                if(scr == 0) {
-                    remove(start);
-                    add(menu);
-                    revalidate();
-                    repaint();
-                    scr = 1;
-                }
-                else if(scr == 1) {
-                    if(Menu.formationIsSelected()) {
-                        setFormation(Menu.getFormation());
-                        remove(menu);
-                        setSize(1440, 1080);
-                        setTitle("Draft Simulator");
-                        add(draft);
-                        revalidate();
-                        repaint();
-                        scr = 2;
-                    }
-                }
+                remove(start);
+                add(menu);
+                revalidate();
+                repaint();
+                setTitle("Draft Simulator");
             }
         });
     }
@@ -146,11 +131,6 @@ public class Application extends JFrame{
     public static int rightBacksSize() { return rightBacks.size(); }
     public static int goalKeepersSize() { return goalKeepers.size(); }
 
-    // Methods for setting and retrieving formation after being selected
-
-    public static void setFormation(int x) { formation = x; }
-    public static int getFormation() { return formation; }
-
     // Method for retrieving image when given image path
 
     public static BufferedImage imageFromFile(String path) {
@@ -165,4 +145,20 @@ public class Application extends JFrame{
         }
         return null;
     }
+
+    // Method for playing sound
+
+    public synchronized void playSound(final String url) {
+        new Thread(() -> {
+            try {
+                AudioInputStream inputStream = AudioSystem.getAudioInputStream(Application.class.getResourceAsStream("\\sounds\\" + url));
+                clip = AudioSystem.getClip();
+                clip.open(inputStream);
+                clip.start();
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
+        }).start();
+    }
+    public static void stopClip() { clip.stop(); }
 }
