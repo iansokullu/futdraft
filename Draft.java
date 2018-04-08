@@ -17,20 +17,16 @@ public class Draft extends JFrame {
 
     public Draft() {
         setSize(1440, 1080);
-        setTitle("Start");
+        setTitle("Draft Simulator");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-
+        add(new Game());
     }
 
     public static void initUI() {
         System.out.println("Formation " + formation);
         game = new Draft();
         game.setVisible(true);
-    }
-
-    public void paintComponent(Graphics g) {
-        g.drawImage(background, 0, 0, null);
     }
 }

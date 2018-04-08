@@ -1,7 +1,6 @@
 /* FIFA Draft Program
  * By Ian Sokullu
- * Richmond Hill, Ontario, Canada
- * 2017-2018
+ * 2018
  * ICS4U
  */
 
@@ -81,9 +80,7 @@ public class Application extends JFrame{
         Start start = new Start();
         Menu menu = new Menu();
 
-
-
-        // Adding starting panels
+        // Adding starting panel and ensuring it fits
         add(start);
         pack();
 

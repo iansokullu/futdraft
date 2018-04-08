@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.nio.Buffer;
 import javax.swing.*;
 
 public class Menu extends JPanel {
@@ -11,6 +10,7 @@ public class Menu extends JPanel {
     2 = 3-4-1-2
     3 = 4-1-2-1-2
      */
+
     private static int formation = 0;
     private boolean stop = false;
 
@@ -19,7 +19,7 @@ public class Menu extends JPanel {
     private BufferedImage form2 = Application.imageFromFile("\\images\\433-2.jpg");
     private BufferedImage form3 = Application.imageFromFile("\\images\\3412.jpg");
     private BufferedImage continueButton = Application.imageFromFile("\\images\\Continue.jpg");
-    private BufferedImage background = Application.imageFromFile("\\images\\MainMenu.jpg");
+    private BufferedImage menuBackground = Application.imageFromFile("\\images\\MainMenu.jpg");
 
     // Main menu panel
 
@@ -71,7 +71,7 @@ public class Menu extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         if(!stop) {
-            g.drawImage(background, 5, 5, null);
+            g.drawImage(menuBackground, 5, 5, null);
             g.drawImage(continueButton, 470, 600, null);
             if(formation == 1)
                 g.setColor(Color.darkGray);
