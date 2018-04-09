@@ -24,6 +24,7 @@ public class Menu extends JPanel {
     // Main menu panel
 
     public Menu() {
+
         addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 int x = e.getX();
@@ -71,37 +72,42 @@ public class Menu extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         if(!stop) {
-            g.drawImage(menuBackground, 5, 5, null);
-            g.drawImage(continueButton, 470, 600, null);
-            if(formation == 1)
-                g.setColor(Color.darkGray);
-            else
-                g.setColor(Color.lightGray);
-            g.fillRect(140, 210, 280, 267);
-            if(formation == 2)
-                g.setColor(Color.darkGray);
-            else
-                g.setColor(Color.lightGray);
-            g.fillRect(580, 210, 280, 267);
-            if(formation == 3)
-                g.setColor(Color.darkGray);
-            else
-                g.setColor(Color.lightGray);
-            g.fillRect(1020, 210, 280, 267);
+            Graphics2D g2d = (Graphics2D)g;
             Color c1 = new Color(15,136,189);
-            g.setColor(c1);
-            g.drawImage(form1, 160, 230, null);
-            g.fillRect(160, 417, 240, 40);
-            g.drawImage(form2, 600, 230, null);
-            g.fillRect(600, 417, 240, 40);
-            g.drawImage(form3, 1040, 230, null);
-            g.fillRect(1040, 417, 240, 40);
-            g.setColor(Color.white);
             Font font = new Font("Arial", Font.PLAIN, 24);
-            g.setFont(font);
-            g.drawString("4-3-3(2)", 238, 444);
-            g.drawString("3-4-1-2", 682, 444);
-            g.drawString("4-1-2-1-2", 1113, 444);
+            g2d.setFont(font);
+            g2d.drawImage(menuBackground, 5, 5, null);
+            g2d.drawImage(continueButton, 470, 600, null);
+            if(formation == 1)
+                g2d.setColor(Color.darkGray);
+            else
+                g2d.setColor(Color.lightGray);
+            g2d.fillRect(140, 210, 280, 267);
+            g2d.setColor(c1);
+            g2d.drawImage(form1, 160, 230, null);
+            g2d.fillRect(160, 417, 240, 40);
+            g2d.setColor(Color.white);
+            g2d.drawString("4-3-3(2)", 238, 444);
+            if(formation == 2)
+                g2d.setColor(Color.darkGray);
+            else
+                g2d.setColor(Color.lightGray);
+            g2d.fillRect(580, 210, 280, 267);
+            g2d.setColor(c1);
+            g2d.drawImage(form2, 600, 230, null);
+            g2d.fillRect(600, 417, 240, 40);
+            g2d.setColor(Color.white);
+            g2d.drawString("3-4-1-2", 682, 444);
+            if(formation == 3)
+                g2d.setColor(Color.darkGray);
+            else
+                g2d.setColor(Color.lightGray);
+            g2d.fillRect(1020, 210, 280, 267);
+            g2d.setColor(c1);
+            g2d.drawImage(form3, 1040, 230, null);
+            g2d.fillRect(1040, 417, 240, 40);
+            g2d.setColor(Color.white);
+            g2d.drawString("4-1-2-1-2", 1113, 444);
         }
     }
     public static int getFormation() { return formation; }
